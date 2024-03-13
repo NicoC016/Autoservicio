@@ -1,0 +1,18 @@
+<div class="container-navigation">
+    <p-menubar [model]="items">
+        <ng-template pTemplate="start">
+            <img src="../assets/img/supercarrito-logo-2.png" height="40" class="mr-2" />
+        </ng-template>
+        <ng-template pTemplate="end">
+            <ng-container *ngIf="!isLoggedUser; else templateNotLogged">
+                <button class="button" [hidden]="isLogin" (click)="goTo('Login')">Login</button>
+            </ng-container>
+            <ng-template #templateNotLogged>
+                <div class="menu-logged">
+                    <span class="mr-5"><i class="pi pi-user"></i> Bienvenido {{user}}</span>
+                    <button class="button" (click)="logout()" >Logout</button>
+                </div>
+            </ng-template>
+        </ng-template>
+    </p-menubar>
+</div>

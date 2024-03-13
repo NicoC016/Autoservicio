@@ -1,0 +1,92 @@
+<div class="mb-3">
+    <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()" styleClass="p-button-text"></p-button>
+    <p-button type="button" icon="pi pi-refresh" (click)="reset()" styleClass="p-button-text"></p-button>
+    <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()" styleClass="p-button-text"></p-button>
+</div>
+<p-table
+    [value]="suppliers"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '20rem' }"
+    currentPageReportTemplate="{first}-{last}/{totalRecords}"
+    (onPage)="pageChange($event)"
+    [rowsPerPageOptions]="[10, 25, 50]"
+>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:15%">Proveedor</th>
+            <th style="width:20%">CUIT</th>
+            <th style="width:20%">Categoría Afip</th>
+            <th style="width:15%">Catogoria productos</th>
+            <th style="width:20%">Ciudad</th>
+            <th style="width:20%">Telefono</th>
+            <th style="width:20%">Acciones</th>
+            <th style="width:20%"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-supplier>
+        <tr>
+            <td>{{ supplier.name }}</td>
+            <td>{{ supplier.cuit }}</td>
+            <td>{{ supplier.categoryAfip }}</td>
+            <td>{{ supplier.categoryProducts }}</td>
+            <td>{{ supplier.city }}</td>
+            <td>{{ supplier.phoneNumber }}</td>
+            <td data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="editSuppliers(supplier.id)"><i class="penEdit fa-solid fa-pen"></i></td>
+            <td (click)="deleteSuppliers(supplier.id)"><i class="trashDelete fa-solid fa-trash"></i></td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+        <p-button data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+    </ng-template>
+</p-table>
+
+<div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">{{labelModal}}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form">
+                    <div class="containterAddSupplier">
+                        <span class="p-float-label">
+                            <input  type="text" pInputText formControlName="name" id="name" class="widthInput" />
+                            <label htmlFor="name">Proveedor</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="categoryAfip" id="categoryAfip" />
+                            <label htmlFor="categoryAfip">Categoria Afip</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="categoryProducts" id="categoryProducts" class="widthInput" />
+                            <label htmlFor="categoryProducts">Categoría productos</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="cuit" id="cuit" class="widthInput" />
+                            <label htmlFor="cuit">CUIL</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="city" id="city" class="widthInput" />
+                            <label htmlFor="city">Ciudad</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="phoneNumber" id="phoneNumber" class="widthInput" />
+                            <label htmlFor="phoneNumber">Numero de telefono</label>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" #buttonClose data-bs-dismiss="modal" (click)="resetModal()">Cerrar</button>
+              <button type="button" class="btn btn-primary" (click)="saveSuppliers()">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

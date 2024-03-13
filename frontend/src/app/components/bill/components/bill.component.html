@@ -1,0 +1,123 @@
+<div class="container-bill" #facturaContent>
+  <div class="row header-bill">
+    <div class="header-editable">
+      <strong contenteditable>Original </strong>
+    </div>
+  </div>
+  <div class="row sub-bill">
+    <div class="type-bill">
+      <b contenteditable >
+        C
+      </b>
+    </div>
+    <div class="information-seller">
+      <p >
+        <strong>Razón social: </strong><span contenteditable> Ingresar texto</span><br>
+        <strong>Domicilio comercial: </strong><span contenteditable> Ingresar texto</span><br>
+        <strong>Condición frente al IVA: </strong><span contenteditable>Ingresar texto</span><br>
+        <br>
+      </p>
+    </div>
+    <div class="info">
+      <p>
+        <span>
+          <h1>Factura</h1>
+        </span>
+        <strong class="space-right">Punto de venta:</strong><span contenteditable> Ingresar texto</span>
+        <strong class="space-left-50 space-right">Comp.Nro:</strong><span contenteditable> Ingresar texto</span><br>
+        <strong class="space-right">Fecha de emisión:</strong><span contenteditable> Ingresar texto</span> <br>
+        <br>
+        <strong class="space-right">CUIT: </strong><span contenteditable> Ingresar texto</span><br>
+        <strong class="space-right">ingresos brutos:</strong><span contenteditable> Ingresar texto</span><br>
+        <strong class="space-right">Fecha de inicio de actividades: </strong><span contenteditable> Ingresar texto</span>
+      </p>
+    </div>
+    <div class="col-1 details">
+      <strong>
+        Periodo Facturado desde: <input contenteditable type="text" class="datePicker"/>
+      </strong>
+      <strong class="text-center">
+        Hasta: <input contenteditable type="text" value="100"  />
+      </strong>
+      <strong class="text-right">Fecha de Vto. para el pago: <input contenteditable class="twoweeks" type="text"/></strong>
+    </div>
+    <div class="col-1 client" >
+        <strong class="space-right">Cuit:</strong><span contenteditable> Ingresar texto</span> 
+        <strong class="space-left-50 space-right">Nombre y apellido / razon social:</strong><span contenteditable> Ingresar texto</span><br>
+        <strong class="space-right">Condición frente al iva:</strong><span contenteditable> Ingresar texto</span>  
+        <strong class="space-left-50 space-right">Domicilio:</strong><span contenteditable> Ingresar texto</span><br>
+        <strong class="space-right">Condición de venta:</strong><span contenteditable> Ingresar texto</span><br>
+    </div>
+    <div class="invoicelist-body">
+      <table>
+        <thead contenteditable class="head-body">
+          <th width="5%">Código</th>
+          <th width="60%">Descripción</th>
+          <th width="10%">Cant.</th>
+          <th width="15%">Precio</th>
+          <th class="taxrelated">IVA</th>
+          <th width="10%">Total</th>
+        </thead>
+        <span #formAdd>
+          <form class="searchProduct" action="" [formGroup]="form">
+            <input formControlName="codebar" type="text" placeholder="Codigo de barra">
+            <input formControlName="quantity" type="text" placeholder="Cantidad">
+            <button (click)="searchProduct()" class="button">Buscar</button>
+          </form>
+        </span>
+        <tbody *ngFor="let item of rows; let i=index">
+          <tr>
+            <td width='5%'><a class="control removeRow " (click)="removeRow(i)">x</a><span>{{item.code}}</span></td>
+            <td width='60%'><span >{{item.description}}</span></td>
+            <td width='10%' class="amount">{{item.cant}}</td>
+            <td width='15%' class="rate">{{item.price}}</td>
+            <td class="tax taxrelated">{{item.IVA}}</td>
+            <td width='10%' class="sum">{{item.total}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>   
+    <div class="invoicelist-footer col-1">
+      <table>
+        <tr class="taxrelated">
+          <td>Subtotal:</td>
+          <td id="total_tax">
+            <span>{{total}}</span>
+          </td>
+        </tr>
+        <tr class="taxrelated">
+          <td>Importe otros Tributos:</td>
+          <td>
+            <span width="20%"> 
+              <form action="" [formGroup]="form">
+                $<input style="width: 40px;" formControlName="moreTax" (blur)="changeValueMoreTax()">
+              </form>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Importe total:</strong></td>
+          <td id="total_price"><span>{{total}}</span></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  
+  <div class="row footer">
+    <div class="col-3">
+      <img src="https://www.afip.gob.ar/frameworkAFIP/img/logo_afip_azul.svg" width="150px" alt="" class="space-right">
+      <strong class="notaxrelated">Comprobante autorizado</strong>
+    </div>
+    <div class="col-3  text-center">
+      pag 1/1
+    </div>
+    <div class="col-3  text-right">
+      <strong>CAE N°</strong> <span> Insertar texto</span><br>
+      <strong>Fecha Vto. de CAE</strong> <span> Insertar texto</span>
+    </div>
+  </div>
+</div>
+
+<div #buttonPrint class="text-center button-generate">
+  <button  class="button" (click)="generarFactura()">Imprimir</button>
+</div>

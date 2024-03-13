@@ -1,0 +1,79 @@
+.widthInput{
+    width: 300px !important;
+}
+.containterSearchProduct{
+    display: grid;
+    justify-content: center;
+    margin: 23px;
+    grid-gap: 32px;
+}
+.container-table{
+    padding: 50px;
+}
+
+.buttons-actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 62px;
+}
+
+
+.container-print {
+    max-width: 400px;
+    margin: 20px auto;
+    border: 1px solid #acacac;
+    border-radius: 10px;
+    box-shadow: -2px 3px 6px 0px rgba(0 ,0 ,0 ,0.3);
+    padding: 20px;
+    h1 {
+        font-size: 1.5em;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+    }
+    
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
+    
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 110px;
+    }
+    
+    .productList {
+      margin-bottom: 5px;
+      display: grid;
+      align-items: center;
+      grid-template-columns: auto auto;
+    }
+
+    .discounts{
+        margin: 40px 0px 40px 0px;
+    }
+    .total-print{
+        border-top: 1px solid rgba(105, 105, 105, 0.3);
+        border-bottom: 1px solid rgba(105, 105, 105, 0.3);
+        display: flex;
+        justify-content: space-between;
+    }
+}
+

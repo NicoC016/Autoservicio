@@ -1,0 +1,122 @@
+<div *ngIf="showProducts">
+    <div class="card" >
+        <p-dataView #dv [value]="products"  [rows]="5" [paginator]="true">
+            <ng-template pTemplate="header">
+                <div class="flex justify-content-between align-items-center">
+                    <p-button data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="fa-solid fa-plus"></i>
+                    </p-button>
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </div>
+            </ng-template>
+            <ng-template let-product pTemplate="listItem">
+                <div class="col-12">
+                    <div class="flex p-4 gap-4">
+                        <img class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" [src]="product.image" [alt]="product.name" />
+                        <div class="flex  sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                            <div class="flex gap-3 flex-column">
+                                <div class="text-2xl font-bold text-900">{{ product.name }}</div>
+                                <div class="flex align-items-center gap-3">
+                                    <span class="flex align-items-center gap-2">
+                                        <i class="pi pi-tag"></i>
+                                        <span class="font-semibold">{{ product.brand }}</span>
+                                    </span>
+                                    <p-tag [value]="product.category" ></p-tag>
+                                </div>
+                                <span class="flex align-items-center gap-2">
+                                    <span class="font-light">{{ product.weight }}{{product.unity.toUpperCase()}}</span>
+                                </span>
+                            </div>
+                            <div class="flex sm:flex-column align-items-end sm:align-items-end gap-3 sm:gap-2">
+                                <span class="text-2xl font-semibold">{{ '$' + product.price }}</span>
+                                <div>
+                                    <span data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="editProduct(product.codebar)" style="margin-right: 10px;"><i class="penEdit fa-solid fa-pen"></i></span>
+                                    <span (click)="deleteProduct(product.codebar)"><i class="trashDelete fa-solid fa-trash"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template let-product pTemplate="gridItem">
+                <div class="col-3 sm:col-2 lg:col-3 xl:col-2 p-2">
+                    <div class="p-4 border-1 surface-border surface-card border-round">
+                        <div class="flex flex-wrap align-items-center justify-content-between gap-2">
+                            <span class="flex align-items-center gap-2">
+                                <i class="pi pi-tag"></i>
+                                <span class="font-semibold">{{ product.brand }}</span>
+                            </span>
+                            <p-tag [value]="product.category" ></p-tag>
+                        </div>
+                        <div class="flex flex-column align-items-center gap-3 py-5">
+                            <img class="w-9 shadow-2 border-round" [src]="product.image" [alt]="product.name" />
+                            <div class="text-2xl font-bold">{{ product.name }}</div>
+                            <div class="text-1xl font-semibold">{{ product.weight }}{{product.unity.toUpperCase()}}</div>
+                        </div>
+                        <div class="flex align-items-center justify-content-between">
+                            <span class="text-2xl font-semibold">{{ '$' + product.price }}</span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dataView>
+    </div>
+</div>
+
+<div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">{{labelModal}}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetModal()"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form">
+                    <div class="containterAddProduct">
+                        <span class="p-float-label">
+                            <input  type="text" pInputText formControlName="name" id="name" class="widthInput" />
+                            <label htmlFor="name">Nombre</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="brand" id="brand" />
+                            <label htmlFor="brand">Marca</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="category" id="category" class="widthInput" />
+                            <label htmlFor="category">Categoria</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="codebar" id="codebar" class="widthInput" />
+                            <label htmlFor="codebar">Código de barras</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="image" id="image" class="widthInput" />
+                            <label htmlFor="image">Imagen</label>
+                        </span>
+                        <span>
+                            <img [src]="form.value.image" alt="" width="150px" height="150px">
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="price" id="price" class="widthInput" />
+                            <label htmlFor="price">Precio</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="weight" id="weight" class="widthInput" />
+                            <label htmlFor="weight">Peso</label>
+                        </span>
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="unity" id="unity" class="widthInput" />
+                            <label htmlFor="unity">Unidad</label>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" #buttonClose data-bs-dismiss="modal" (click)="resetModal()">Cerrar</button>
+              <button type="button" class="btn btn-primary" (click)="saveProduct()">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
