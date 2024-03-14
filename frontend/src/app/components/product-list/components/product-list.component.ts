@@ -30,7 +30,6 @@ export class ProductListComponent {
   ngOnInit(): void {
     this.searchProduct();
     this.createForm();
-    debugger
     //@ts-ignore
     this.userLogged =  JSON.parse(localStorage.getItem('userData'));
   }
