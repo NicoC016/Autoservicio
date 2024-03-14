@@ -1,10 +1,9 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import {Product} from '../models/product.model'
+import { Product } from '../models/product.model'
 import { FlashMessagesService } from 'flash-messages-angular';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { PDFDocument, rgb, StandardFonts, PDFPage } from 'pdf-lib';
 
 interface Producto {
   nombre: string;
@@ -24,6 +23,8 @@ export class ProductsComponent {
   public nuevoProducto: Product = { name: '', price: 0, quantity: 0 };
   @ViewChild('productos')productos!:ElementRef;
   @ViewChild('iconDelete')iconDelete!:ElementRef;
+  @ViewChild('buttonPrint')buttonPrint!:ElementRef;
+  @ViewChild('buttonQR')buttonQR!:ElementRef;
   total: number = 0;
 
 
@@ -95,20 +96,54 @@ export class ProductsComponent {
   actualizarTotal(): void {
     this.total = this.products.reduce((sum, p) => sum > 0? sum + (p.price * p.quantity) : (p.price * p.quantity), 0);
   }
-
-  descargarTicket(): void {
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const options = {
-      background: 'white',
-      scale: 3
-    };
-    this.iconDelete.nativeElement.style.display = "none";
-    
-    html2canvas(this.productos.nativeElement, options).then((canvas) => {
-      const imageData = canvas.toDataURL('image/png');
-      pdf.addImage(imageData, 'PNG', 10, 10, 190, 0);
-      pdf.save('ticket.pdf');
+  async generateTicket(): Promise<Uint8Array> {
+    let ticketContent:any[] = [
+      {text: '      Supercarrito                    ', fontSize: 18 },
+      {text: '---------------------------------------------------'},
+      {text: `Fecha: ${new Date().toLocaleDateString()}         Hora: ${new Date().toLocaleTimeString()}`},
+      {text: '---------------------------------------------------'},
+    ];
+    this.products.forEach(res=>{
+      ticketContent.push({ text: `${res.name}/s (${res.quantity}*${res.price})                  $${res.price * res.quantity }`});
     });
-    this.iconDelete.nativeElement.style.display = "";
+
+    let addTicketContent = [
+      {text: ''},
+      {text: '---------------------------------------------------'},
+      {text: `total:                                         $${this.total}`},
+      {text: '---------------------------------------------------'},
+      {text: '           ¡Gracias por su visita! '                           }  
+    ];
+
+    ticketContent.push(...addTicketContent);
+
+
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage([200, 300]);
+    const { width, height } = page.getSize();
+    const defaultFontSize = 10;
+    let yPosition = height;
+    ticketContent.forEach(({ text, fontSize = defaultFontSize }) => {
+        yPosition -= fontSize;
+        const xPosition = (width - 170) / 2;
+        page.drawText(text, {
+          x: xPosition,
+          y: yPosition,
+          size: fontSize,
+          color: rgb(0, 0, 0),
+        });
+    });
+    return await pdfDoc.save();
   }
+
+  // Función para descargar el boleto térmico como PDF
+  async downloadPDF() {
+    const pdfBytes = await this.generateTicket();
+    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'boleto_termico.pdf';
+    link.click();
+  }
+
 }

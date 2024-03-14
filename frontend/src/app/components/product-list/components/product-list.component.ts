@@ -18,6 +18,9 @@ export class ProductListComponent {
   public labelModal = 'Agregar producto';
   public idSupplier = '';
   public isEdit = false;
+  public userLogged = { 
+    role: '',
+  };
 
   constructor(
     public productListService:ProductListService,
@@ -27,6 +30,9 @@ export class ProductListComponent {
   ngOnInit(): void {
     this.searchProduct();
     this.createForm();
+    debugger
+    //@ts-ignore
+    this.userLogged =  JSON.parse(localStorage.getItem('userData'));
   }
 
   createForm(){
