@@ -1,18 +1,39 @@
-<div class="container-navigation">
+<div class="container-navigation" >
     <p-menubar [model]="items">
         <ng-template pTemplate="start">
             <img src="../assets/img/supercarrito-logo-2.png" height="40" class="mr-2" />
         </ng-template>
         <ng-template pTemplate="end">
             <ng-container *ngIf="!isLoggedUser; else templateNotLogged">
-                <button class="button" [hidden]="isLogin" (click)="goTo('Login')">Login</button>
+                <button class="button" [hidden]="isLogin" (click)="goTo('login')">Login</button>
             </ng-container>
             <ng-template #templateNotLogged>
                 <div class="menu-logged">
-                    <span class="mr-5"><i class="pi pi-user"></i> Bienvenido {{user}}</span>
                     <button class="button" (click)="logout()" >Logout</button>
                 </div>
             </ng-template>
         </ng-template>
     </p-menubar>
 </div>
+
+<div class="container-navigation-mobile">
+    <div class="nav">
+        <div class="nav-item" [ngClass]="{'active': menuItemsActive.home}" (click)="changeMenu('home')">
+            <i class="material-icons home-icon pi pi-home"></i>
+            <span class="nav-text">Inicio</span>
+        </div>
+        <div class="nav-item"  [ngClass]="{'active': menuItemsActive.favourite}" (click)="changeMenu('favourite')">
+            <i class="material-icons favorite-icon pi pi-heart"></i>
+            <span class="nav-text">Favoritos</span>
+        </div>
+        <div class="nav-item" [ngClass]="{'active': menuItemsActive.listProducts}" (click)="changeMenu('listProducts')">
+            <i class="material-icons products-icon pi pi-search"></i>
+            <span class="nav-text">Productos</span>
+        </div>
+        <div class="nav-item" [ngClass]="{'active': menuItemsActive.profile}" (click)="changeMenu('profile')">
+            <i class="material-icons person-icon pi pi-user"></i>
+            <span class="nav-text">Perfil</span>
+        </div>
+      </div>
+</div>
+

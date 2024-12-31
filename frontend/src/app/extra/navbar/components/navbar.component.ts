@@ -10,25 +10,40 @@ import { MenuItem } from 'primeng/api';
 export class NavbarComponent {
   
   public items: MenuItem[] = [];
-  public activeItem: MenuItem ={} ;
+  public activeItem: MenuItem = {} ;
   public isLoggedUser = localStorage.getItem('userData') !== '';
   public user = '';
   public isLogin = false;
   public userInfo:any;
 
-  constructor(
-    public router:Router,
-  ){}
+  public menuItemsActive:any = {
+    home:true,
+    profile:false,
+    favourite:false,
+    listProducts:false,
+  }
+
+  constructor(public router:Router){
+    const path = window.location.pathname.split('/')[1];
+    if(this.menuItemsActive[path] !== undefined) {
+      this.menuItemsActive = {
+        home:false,
+        profile:false,
+        favourite:false,
+        listProducts:false,
+      };
+      this.menuItemsActive[path] = true;
+    }
+  }
 
   ngOnInit() {
     if(window.location.pathname === '/login')this.isLogin = true;
     if(this.isLoggedUser ){
-      //@ts-ignore
-      this.userInfo = JSON.parse(localStorage.getItem('userData'));
-      //@ts-ignore
-      this.user = JSON.parse(localStorage.getItem('userData')).email;
+      const data = localStorage.getItem('userData');
+      this.userInfo = JSON.parse(data !!);
+      this.user = this.userInfo.email.split('@')[0];
       this.items = [
-          { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink:'/'},
+          { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink:'home'},
           { label: 'Empleados', icon: 'pi pi-fw pi-users', routerLink:'employeed', visible: this.userInfo.role === 'admin'},
           { label: 'Facturar', icon: 'fa-solid fa-file-invoice', routerLink:'bill' },
           { label: 'Clientes', icon: 'pi pi-fw pi-user',routerLink:'client', visible: this.userInfo.role === 'admin' },
@@ -44,11 +59,22 @@ export class NavbarComponent {
     }
   }
 
-  onActiveItemChange(event: MenuItem) {
+  changeMenu(tab:'home'|'profile'|'favourite'|'listProducts'){
+    this.menuItemsActive = {
+      home:false,
+      profile:false,
+      favourite:false,
+      listProducts:false,
+    };
+    this.menuItemsActive[tab] = true;
+    this.goTo(tab);
+  }
+
+  onActiveItemChange(event: any) {
       this.activeItem = event;
   }
   goTo(route:any){
-    this.router.navigate(['login']);
+    this.router.navigate([route]);
   }
 
   logout(){

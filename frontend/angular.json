@@ -39,7 +39,6 @@
               "core-js/modules/es.array.index-of.js",
               "core-js/modules/es.array.reduce.js",
               "core-js/modules/es.array.iterator.js"
-
             ],
             "polyfills": [
               "zone.js"

@@ -18,3 +18,116 @@
         display: none;
     }
 }
+.container-navigation{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+}
+@media (max-width: 960px) {
+    .container-navigation {
+        top: 90%;
+        display: none;
+    }
+}
+@media screen and (min-width: 960px) {
+    .container-navigation-mobile {
+        display: none !important;
+    }
+}
+
+
+//Mobile
+
+.container-navigation-mobile {
+    position: fixed;
+    top: 88%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    justify-content: center;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 15px;
+    background-color: #d2d2d2;
+    padding: 10px;
+    border-radius: 30px;
+    box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.4);
+}
+
+.nav-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 13px 18px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+}
+
+.nav-text {
+    font-size: 17px;
+    margin: auto;
+    text-align: center;
+    font-weight: 500;
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.material-icons {
+    display: inline;
+    font-size: 20px;
+    transition: color .3s;
+}
+
+.nav-item.active {
+    flex-grow: 3;
+    border-radius: 30px;
+    background: #eee;
+    justify-content: flex-start;
+}
+
+.nav-item.active > .nav-text {
+    display: inline-block;
+}
+
+.nav-item.active > .material-icons.home-icon {
+    color: #5a35b5;
+}
+
+.material-icons.home-icon ~ .nav-text {
+    color: #5a35b5;
+}
+
+.nav-item.active > .material-icons.favorite-icon {
+    color: #c9329a;
+}
+
+.material-icons.favorite-icon ~ .nav-text {
+    color: #c9329a;
+}
+
+.nav-item.active > .material-icons.products-icon {
+    color: #e5a023;
+}
+
+.material-icons.products-icon ~ .nav-text {
+    color: #e5a023;
+}
+
+.nav-item.active > .material-icons.person-icon {
+    color: #0091a9;
+}
+
+.material-icons.person-icon ~ .nav-text {
+    color: #0091a9;
+}
+
+
