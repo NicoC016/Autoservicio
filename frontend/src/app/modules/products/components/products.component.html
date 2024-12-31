@@ -1,0 +1,69 @@
+<form action="" [formGroup]="form">
+    <div class="containterSearchProduct">
+        <div class="p-inputgroup widthInput">
+            <input type="text" pInputText formControlName="codebar" placeholder="Codigo de barra" />
+            <span class="p-inputgroup-addon" style="cursor: pointer;" (click)="searchProduct()">
+                <i class="pi pi-search hand"></i>
+            </span>
+        </div>
+        <span class="p-float-label">
+            <input  type="text" pInputText formControlName="name" id="name" class="widthInput" />
+            <label htmlFor="name">Nombre</label>
+        </span>
+        <span class="p-float-label">
+            <input type="text" pInputText formControlName="brand" id="brand" class="widthInput" />
+            <label htmlFor="brand">Marca</label>
+        </span>
+        <span class="p-float-label">
+            <input type="text" pInputText formControlName="category" id="category" class="widthInput" />
+            <label htmlFor="category">Categoría</label>
+        </span>
+        <span class="p-float-label">
+            <input type="text" pInputText formControlName="price" id="price" class="widthInput" />
+            <label htmlFor="price">Precio</label>
+        </span>
+        <span class="p-float-label">
+            <input type="text" pInputText formControlName="quantity" id="quantity" class="widthInput" />
+            <label htmlFor="quantity">Cantidad</label>
+        </span>
+        <div class="buttons-actions">
+            <button class="button" (click)="addProduct()"> Agregar producto</button>
+        </div>
+    </div>
+</form>
+<div #productos *ngIf="showProduct">
+    <div class="container-print" >
+      <h2 class="text-center">Productos</h2>
+      <hr>
+      <ul>
+        <li class="productList" *ngFor="let product of products"> 
+            <span >
+                <b>{{ product.name }}/s</b> ({{product.quantity}} * ${{product.price}}):   
+            </span>
+            <span class="text-right">
+                <b>${{ product.price * product.quantity }}  </b>
+
+                <i #iconDelete class="fa-solid fa-trash-can" style="color: red;" (click)="deleteProductList(product.name)"></i>
+            </span>
+        </li>
+      </ul>
+      <div>
+        <div class="total-print">
+          <p>Subtotal sin descuentos:</p>
+          <b> ${{ total }}</b>
+        </div>
+      </div>
+      <div class="discounts">
+        Descuentos: 
+      </div>
+      <div>
+        <div class="total-print">
+          <p>Total:</p>
+          <b> ${{ total }}</b>
+        </div>
+      </div>
+    </div>
+    <div class="buttons-actions">
+        <button #buttonPrint class="button" type="button" (click)="downloadPDF()">Imprimir ticket</button>
+    </div>
+</div>

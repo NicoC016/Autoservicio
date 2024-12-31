@@ -12,16 +12,16 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 
 //module of components
-import { EmployeeModule } from './components/employee/employee.module';
-import { HomeModule } from './components/home/home.module';
-import { BillModule } from './components/bill/bill.module';
-import { ProductsModule } from './components/products/products.module';
-import { LoginModule } from './components/login/login.module';
-import { ClientModule } from './components/client/client.module';
-import { SuppliersModule } from './components/suppliers/suppliers.module';
+import { EmployeeModule } from '@modules/employee/employee.module';
+import { HomeModule } from '@modules/home/home.module';
+import { BillModule } from '@modules/bill/bill.module';
+import { ProductsModule } from './modules/products/products.module';
+import { LoginModule } from '@modules/login/login.module';
+import { ClientModule } from '@modules/client/client.module';
+import { SuppliersModule } from '@modules/suppliers/suppliers.module';
 import { NavbarComponent } from './extra/navbar/components/navbar.component';
-import { ConsultingPriceModule } from './components/consulting-price/consulting-price.module';
-import { ProductListModule } from './components/product-list/product-list.module';
+import { ConsultingPriceModule } from '@modules/consulting-price/consulting-price.module';
+import { ProductListModule } from '@modules/product-list/product-list.module';
 ;
 
 @NgModule({
